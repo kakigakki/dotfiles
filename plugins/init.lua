@@ -55,6 +55,7 @@ return {
   ["tpope/vim-fugitive"] = {},
 
   ["goolord/alpha-nvim"] = {
+    override_options = overrides.alpha,
     disable = false,
   },
 
