@@ -19,6 +19,7 @@ return {
       current_line_blame_opts = {
         delay = 200,
       },
+      current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>(<abbrev_sha>)",
     },
   },
 
@@ -92,14 +93,6 @@ return {
     ignore_filetypes = { "NvimTree", "TelescopePrompt" },
   },
 
-  -- like easy-motion
-  ["phaazon/hop.nvim"] = {
-    branch = "v2", -- optional but strongly recommended
-    config = function()
-      -- you can configure Hop the way you like here; see :h hop-config
-      require("hop").setup { keys = "etovxqpdygfblzhckisuran" }
-    end,
-  },
   -- word search tool
   ["ggandor/lightspeed.nvim"] = {},
 
@@ -189,5 +182,47 @@ return {
       }
     end,
   },
-  -- ["hrsh7th/cmp-path"] = false,
+
+  -- -- git tool , mainly for hunk preview
+  -- ["tanvirtin/vgit.nvim"] = {
+  --   requires = {
+  --     "nvim-lua/plenary.nvim",
+  --   },
+  --   after = "nvim-web-devicons",
+  --   config = function()
+  --     require("vgit").setup()
+  --   end,
+  -- },
+
+  -- git tool, for copy file permalinks
+  ["ruifm/gitlinker.nvim"] = {
+    requires = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("gitlinker").setup()
+    end,
+  },
+
+  -- git tool , mainly for file history
+  ["sindrets/diffview.nvim"] = {
+    requires = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
+
+  ["windwp/nvim-ts-autotag"] = {
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+
+  ["zhiyuanlck/smart-pairs"] = {
+    event = "InsertEnter",
+    config = function()
+      require("pairs"):setup()
+    end,
+  },
+  -- remove
+  ["windwp/nvim-autopairs"] = false,
 }

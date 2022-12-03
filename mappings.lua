@@ -6,6 +6,15 @@ M.general = {
     ["<C-e>"] = { "<ESC>^i", "beginning of line" },
     ["<C-b>"] = { "<End>a", "end of line" },
 
+    -- switch between windows
+    ["<leader>v"] = { "<C-w>v", "new vetical window" },
+    ["<leader>h"] = { "<C-w>s", "new horizontal window" },
+    ["<leader>q"] = { "<C-w>q", "quit window" },
+    ["<C-h>"] = { "<C-w>h", "window left" },
+    ["<C-l>"] = { "<C-w>l", "window right" },
+    ["<C-j>"] = { "<C-w>j", "window down" },
+    ["<C-k>"] = { "<C-w>k", "window up" },
+
     [";"] = { ":", "command mode", opts = { nowait = true } },
 
     ["J"] = { "10j", "move faster" },
@@ -14,35 +23,12 @@ M.general = {
     ["L"] = { "$", "move to end" },
     ["H"] = { "^", "move to head" },
 
-    -- hopWord
-    ["<leader>h"] = {
-      function()
-        require("hop").hint_words()
-      end,
-      "HopWord",
-    },
-    ["<leader>hh"] = {
-      function()
-        require("hop").hint_words()
-      end,
-      "HopWord",
-    },
-    ["<leader>h1"] = {
-      function()
-        require("hop").hint_char1()
-      end,
-      "HopChar1",
-    },
-    ["<leader>h2"] = {
-      function()
-        require("hop").hint_char2()
-      end,
-      "HopChar2",
-    },
+    ["<leader>j"] = { "d0i<BS>jj", "move to prev line" },
+    ["<leader>bb"] = { "<cmd>%bd<cr>", "close all buffers" },
 
     -- 置换工具
     ["<leader>s"] = {
-      "<cmd>lua requoperatorire('substitute.range').operator()<cr>",
+      "<cmd>luarequoperatorire('substitute.range').operator()<cr>",
       "substitute.range",
     },
 
@@ -79,6 +65,18 @@ M.general = {
       end,
       "prev marked file",
     },
+
+    -- VGit preview
+    -- ["<leader>fg"] = { "<cmd>VGit buffer_history_preview<cr>", "file history preview" },
+    -- ["<leader>pp"] = { "<cmd>VGit buffer_hunk_preview<cr>", "hunk preview" },
+    -- ["[c"] = { "<cmd>VGit hunk_up<cr>", "prev VGit hunk" },
+    -- ["]c"] = { "<cmd>VGit hunk_down<cr>", "next VGit hunk" },
+
+    -- diffview
+    ["<leader>da"] = { "<cmd>DiffviewFileHistory %<cr>", "open branch commits history" },
+    ["<leader>df"] = { "<cmd>DiffviewFileHistory %<cr>", "open current file history" },
+    ["<leader>do"] = { "<cmd>DiffviewOpen<cr>", "open diffview" },
+    ["<leader>dc"] = { "<cmd>DiffviewClose<cr>", "close diffview" },
   },
 
   i = {
@@ -195,5 +193,4 @@ M.gitsigns = {
     },
   },
 }
-
 return M
