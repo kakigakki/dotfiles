@@ -152,6 +152,7 @@ return {
       }
     end,
   },
+
   ["chentoast/marks.nvim"] = {
     config = function()
       require("marks").setup {
@@ -288,4 +289,6 @@ return {
   ["weilbith/nvim-code-action-menu"] = {
     cmd = "CodeActionMenu",
   },
+
+  ["elihunter173/dirbuf.nvim"] = {},
 }

@@ -85,6 +85,10 @@ M.general = {
     ["<ESC>"] = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "close preview" },
 
     ["<leader>ca"] = { "<cmd>CodeActionMenu<cr>", "show codeActionMenu popup" },
+
+    ["<leader>fe"] = { "<cmd>Dirbuf<cr>", "edit your files like text" },
+
+    ["<leader>gu"] = { "<S-~>", "edit your files like text" },
   },
 
   i = {
