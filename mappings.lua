@@ -16,6 +16,7 @@ M.general = {
     ["<C-k>"] = { "<C-w>k", "window up" },
 
     [";"] = { ":", "command mode", opts = { nowait = true } },
+    ["_"] = { "/", "search mode", opts = { nowait = true } },
 
     ["J"] = { "10j", "move faster" },
     ["K"] = { "10k", "move faster" },
@@ -25,6 +26,7 @@ M.general = {
 
     ["<leader>j"] = { "d0i<BS>jj", "move to prev line" },
     ["<leader>bb"] = { "<cmd>%bd<cr>", "close all buffers" },
+    ["<leader>se"] = { "g*", "g*" },
 
     -- 置换工具
     ["<leader>s"] = {
@@ -73,10 +75,16 @@ M.general = {
     -- ["]c"] = { "<cmd>VGit hunk_down<cr>", "next VGit hunk" },
 
     -- diffview
-    ["<leader>da"] = { "<cmd>DiffviewFileHistory %<cr>", "open branch commits history" },
+    ["<leader>da"] = { "<cmd>DiffviewFileHistory<cr>", "open branch commits history" },
     ["<leader>df"] = { "<cmd>DiffviewFileHistory %<cr>", "open current file history" },
     ["<leader>do"] = { "<cmd>DiffviewOpen<cr>", "open diffview" },
-    ["<leader>dc"] = { "<cmd>DiffviewClose<cr>", "close diffview" },
+    ["<leader>dx"] = { "<cmd>DiffviewClose<cr>", "close diffview" },
+
+    -- goto preview
+    ["<leader>pv"] = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "definition preview" },
+    ["<ESC>"] = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "close preview" },
+
+    ["<leader>ca"] = { "<cmd>CodeActionMenu<cr>", "show codeActionMenu popup" },
   },
 
   i = {
@@ -91,6 +99,7 @@ M.general = {
 
   v = {
     [";"] = { ":", "command mode", opts = { nowait = true } },
+    ["_"] = { "/", "search mode", opts = { nowait = true } },
 
     -- save
     ["<C-s>"] = { "<ESC><cmd> w <CR>", "save file" },
@@ -193,4 +202,26 @@ M.gitsigns = {
     },
   },
 }
+
+M.comment = {
+  plugin = true,
+
+  -- toggle comment in both modes
+  n = {
+    ["<leader>cc"] = {
+      function()
+        require("Comment.api").toggle.linewise.current()
+      end,
+      "toggle comment",
+    },
+  },
+
+  v = {
+    ["<leader>cc"] = {
+      "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+      "toggle comment",
+    },
+  },
+}
+
 return M

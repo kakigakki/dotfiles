@@ -1,4 +1,6 @@
 local overrides = require "custom.plugins.overrides"
+vim.g.code_action_menu_show_details = false
+vim.g.code_action_menu_window_border = "single"
 
 return {
 
@@ -117,6 +119,7 @@ return {
       vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
     end,
   },
+
   -- lsp gd preview
   ["rmagatti/goto-preview"] = {
     config = function()
@@ -217,12 +220,72 @@ return {
     end,
   },
 
-  ["zhiyuanlck/smart-pairs"] = {
-    event = "InsertEnter",
+  ["terryma/vim-multiple-cursors"] = {},
+
+  -- translator
+  ["potamides/pantran.nvim"] = {
     config = function()
-      require("pairs"):setup()
+      require("pantran").setup {
+        -- Default engine to use for translation. To list valid engine names run
+        -- `:lua =vim.tbl_keys(require("pantran.engines"))`.
+        default_engine = "argos",
+        -- Configuration for individual engines goes here.
+        engines = {
+          argos = {
+            -- Default languages can be defined on a per engine basis. In this case
+            -- `:lua require("pantran.async").run(function()
+            -- vim.pretty_print(require("pantran.engines").yandex:languages()) end)`
+            -- can be used to list available language identifiers.
+            default_source = "jp",
+            default_target = "en",
+          },
+        },
+      }
     end,
   },
-  -- remove
-  ["windwp/nvim-autopairs"] = false,
+  -- highlight N search
+  ["kevinhwang91/nvim-hlslens"] = {
+    config = function()
+      require("hlslens").setup {
+        calm_down = true,
+        nearest_only = true,
+        nearest_float_when = "always",
+      }
+
+      local kopts = { noremap = true, silent = true }
+
+      vim.api.nvim_set_keymap(
+        "n",
+        "n",
+        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        kopts
+      )
+      vim.api.nvim_set_keymap(
+        "n",
+        "N",
+        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        kopts
+      )
+      vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+
+      vim.api.nvim_set_keymap("n", "<Leader>l", "<Cmd>noh<CR>", kopts) -- run `:nohlsearch` and export results to quickfix
+      -- if Neovim is 0.8.0 before, remap yourself.
+      vim.keymap.set({ "n", "x" }, "<Leader>L", function()
+        vim.schedule(function()
+          if require("hlslens").exportLastSearchToQuickfix() then
+            vim.cmd "cw"
+          end
+        end)
+        return ":noh<CR>"
+      end, { expr = true })
+    end,
+  },
+
+  -- popup code action
+  ["weilbith/nvim-code-action-menu"] = {
+    cmd = "CodeActionMenu",
+  },
 }

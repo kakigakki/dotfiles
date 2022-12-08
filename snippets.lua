@@ -27,7 +27,7 @@ local function loadCustomSnippet(ls)
       t "}",
     }),
 
-    s("watch", {
+    s("wat", {
       t "watch(",
       i(1),
       t ",()=>{",
@@ -49,6 +49,12 @@ local function loadCustomSnippet(ls)
       t "watchEffect(()=>{",
       i(1),
       t "})",
+    }),
+
+    s("compu", {
+      t "computed(()=>",
+      i(1),
+      t ")",
     }),
   })
 end
