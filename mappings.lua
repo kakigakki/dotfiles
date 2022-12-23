@@ -228,4 +228,13 @@ M.comment = {
   },
 }
 
+M.telescope = {
+  n = {
+    ["<leader>a"] = { "<cmd> Telescope yank_history <CR>", "yank_history" },
+  },
+  v = {
+    ["<leader>a"] = { "<cmd> Telescope yank_history <CR>", "yank_history" },
+  },
+}
+
 return M

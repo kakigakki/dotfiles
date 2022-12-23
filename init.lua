@@ -10,5 +10,3 @@ opt.foldenable = true
 --   pattern = "*",
 --   command = "tabdo wincmd =",
 -- })
---
---

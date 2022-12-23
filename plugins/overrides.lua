@@ -72,7 +72,6 @@ M.nvimtree = {
     },
   },
 }
-
 M.alpha = {
   header = {
     type = "text",

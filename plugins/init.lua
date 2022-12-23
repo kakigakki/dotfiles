@@ -1,6 +1,7 @@
 local overrides = require "custom.plugins.overrides"
 vim.g.code_action_menu_show_details = false
 vim.g.code_action_menu_window_border = "single"
+vim.g.camelcasemotion_key = ","
 
 return {
 
@@ -224,26 +225,27 @@ return {
   ["terryma/vim-multiple-cursors"] = {},
 
   -- translator
-  ["potamides/pantran.nvim"] = {
-    config = function()
-      require("pantran").setup {
-        -- Default engine to use for translation. To list valid engine names run
-        -- `:lua =vim.tbl_keys(require("pantran.engines"))`.
-        default_engine = "argos",
-        -- Configuration for individual engines goes here.
-        engines = {
-          argos = {
-            -- Default languages can be defined on a per engine basis. In this case
-            -- `:lua require("pantran.async").run(function()
-            -- vim.pretty_print(require("pantran.engines").yandex:languages()) end)`
-            -- can be used to list available language identifiers.
-            default_source = "jp",
-            default_target = "en",
-          },
-        },
-      }
-    end,
-  },
+  -- ["potamides/pantran.nvim"] = {
+  --   config = function()
+  --     require("pantran").setup {
+  --       -- Default engine to use for translation. To list valid engine names run
+  --       -- `:lua =vim.tbl_keys(require("pantran.engines"))`.
+  --       default_engine = "argos",
+  --       -- Configuration for individual engines goes here.
+  --       engines = {
+  --         argos = {
+  --           -- Default languages can be defined on a per engine basis. In this case
+  --           -- `:lua require("pantran.async").run(function()
+  --           -- vim.pretty_print(require("pantran.engines").yandex:languages()) end)`
+  --           -- can be used to list available language identifiers.
+  --           default_source = "jp",
+  --           default_target = "en",
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
+
   -- highlight N search
   ["kevinhwang91/nvim-hlslens"] = {
     config = function()
@@ -267,7 +269,7 @@ return {
         [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
         kopts
       )
-      vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap("n", "*", [[*<Cmd>('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
@@ -289,6 +291,27 @@ return {
   ["weilbith/nvim-code-action-menu"] = {
     cmd = "CodeActionMenu",
   },
-
+  -- edit directory or file like edit text
   ["elihunter173/dirbuf.nvim"] = {},
+
+  -- when open history
+  -- ["<c-p>"] = mapping.put("p"),
+  -- ["<c-k>"] = mapping.put("P"),
+  -- ["<c-x>"] = mapping.delete(),
+  --　copy more paste more
+  ["gbprod/yanky.nvim"] = {
+    config = function()
+      require("yanky").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+      vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+      vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+      vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+      vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+    end,
+  },
+  -- kebab camelCase underbar motion
+  ["bkad/CamelCaseMotion"] = {},
 }
