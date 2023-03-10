@@ -28,17 +28,6 @@ M.general = {
     ["<leader>bb"] = { "<cmd>%bd<cr>", "close all buffers" },
     ["<leader>se"] = { "g*", "g*" },
 
-    -- 置换工具
-    ["<leader>s"] = {
-      "<cmd>luarequoperatorire('substitute.range').operator()<cr>",
-      "substitute.range",
-    },
-
-    ["<leader>ss"] = {
-      "<cmd>lua require('substitute.range').operator()<cr>",
-      "substitute.range",
-    },
-
     -- mark Actions
     ["<leader>ma"] = {
       function()
@@ -86,15 +75,16 @@ M.general = {
 
     ["<leader>ca"] = { "<cmd>CodeActionMenu<cr>", "show codeActionMenu popup" },
 
-    ["<leader>fe"] = { "<cmd>Dirbuf<cr>", "edit your files like text" },
+    ["<leader>gu"] = { "<S-~>", "toggle case" },
 
-    ["<leader>gu"] = { "<S-~>", "edit your files like text" },
+    -- neotree focus
+    ["<leader>e"] = { "<cmd> Neotree focus <CR>", "neoTree focus" },
   },
 
   i = {
     -- go to  beginning and end
-    ["<C-e>"] = { "<ESC>^i", "beginning of line" },
-    ["<C-b>"] = { "<End>", "end of line" },
+    ["<C-b>"] = { "<ESC>^i", "beginning of line" },
+    ["<C-e>"] = { "<End>", "end of line" },
     ["<C-s>"] = { "<ESC><cmd> w <CR>", "save file" },
 
     ["jj"] = { "<ESC>" },
@@ -113,6 +103,7 @@ M.general = {
     ["L"] = { "$h", "select until end" },
     ["H"] = { "^", "select until head" },
 
+    -- 置换工具
     ["<leader>s"] = {
       function()
         require("substitute.range").operator()
@@ -172,24 +163,6 @@ M.lspconfig = {
       end,
       "lsp hover",
     },
-  },
-}
-
-M.nvimtree = {
-  plugin = true,
-
-  n = {
-    -- toggle
-    ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "toggle nvimtree" },
-
-    -- focus
-    ["<leader>e"] = { "<cmd> NvimTreeFocus <CR>", "focus nvimtree" },
-
-    ["<leader>r+"] = { "<cmd> NvimTreeResize +20<CR>", "resize nvimtree" },
-
-    ["<leader>r-"] = { "<cmd> NvimTreeResize -20<CR>", "resize nvimtree" },
-
-    ["<leader>rf"] = { "<cmd> NvimTreeFindFile <CR>", "find current file postion" },
   },
 }
 

@@ -15,34 +15,12 @@ local function loadCustomSnippet(ls)
       t ")",
     }),
 
-    s("typ", {
-      t "type PropsType = {",
-      i(1),
-      t "}",
-    }),
-
-    s("tys", {
-      t "type StatesType = {",
-      i(1),
-      t "}",
-    }),
-
     s("wat", {
       t "watch(",
       i(1),
       t ",()=>{",
       i(2),
       t "})",
-    }),
-
-    s("usef", {
-      t "export default (",
-      i(1),
-      t { ") => {", "  return aysnc (" },
-      i(2),
-      t { ") => {" },
-      i(3),
-      t { "}", "}" },
     }),
 
     s("effct", {
@@ -56,6 +34,33 @@ local function loadCustomSnippet(ls)
       i(1),
       t ")",
     }),
+
+    s("cmodel",{
+      t "const { modelVale }defineModel<{",
+      i(1),
+      t "}>()"
+    }),
+    s("cemits",{
+      t "const emits = defineEmits<{",
+      i(1),
+      t "}>()"
+    }),
+    s("cprops",{
+      t "defineProps<{",
+      i(1),
+      t "}>()"
+    }),
+    s("cdefault",{
+      t "const props = withDefaults(defineProps<{",
+      i(1),
+      t "}>(),{",
+      t "})",
+    }),
+    -- s("model",{
+    --   t "defineModel{<",
+    --   i(1),
+    --   t "}>()"
+    -- })
   })
 end
 
