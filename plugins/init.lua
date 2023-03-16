@@ -579,7 +579,7 @@ return {
           tail = { cursor = nil, texthl = "SmoothCursor" },
         },
         flyin_effect = nil, -- "bottom" or "top"
-        speed = 60, -- max is 100 to stick to your current position
+        speed = 80, -- max is 100 to stick to your current position
         intervals = 35, -- tick interval
         priority = 10, -- set marker priority
         timeout = nil, -- timout for animation
