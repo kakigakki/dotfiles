@@ -15,6 +15,9 @@ return {
     end,
   },
 
+  ["folke/which-key.nvim"] = { disable = false },
+
+  -- overrde plugin configs
   ["lewis6991/gitsigns.nvim"] = {
     override_options = {
       current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame
@@ -26,7 +29,6 @@ return {
     },
   },
 
-  -- overrde plugin configs
   ["nvim-treesitter/nvim-treesitter"] = {
     run = ":TSUpdate", -- for nvim-ufo
     override_options = overrides.treesitter,
@@ -263,9 +265,10 @@ return {
     end,
   },
 
+  -- Install a plugin
   ["lukas-reineke/lsp-format.nvim"] = {},
 
-  -- Install a plugin
+  -- code formatting, linting etc
   ["max397574/better-escape.nvim"] = {
     event = "InsertEnter",
     config = function()
@@ -273,7 +276,6 @@ return {
     end,
   },
 
-  -- code formatting, linting etc
   ["jose-elias-alvarez/null-ls.nvim"] = {
     after = "nvim-lspconfig",
     config = function()
@@ -289,8 +291,6 @@ return {
   },
 
   ["kdheepak/lazygit.nvim"] = {},
-
-  ["folke/which-key.nvim"] = { disable = false },
 
   -- カーソルが当たった単語を光らせる
   ["RRethy/vim-illuminate"] = {},
@@ -331,12 +331,6 @@ return {
     end,
   },
 
-  ["RishabhRD/popfix"] = {},
-  ["RishabhRD/nvim-lsputils"] = {},
-
-  -- fold plugin
-  -- za toggle
-  -- zR open all fold
   ["kevinhwang91/nvim-ufo"] = {
     requires = "kevinhwang91/promise-async",
     config = function()
@@ -349,6 +343,12 @@ return {
       vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
     end,
   },
+  ["RishabhRD/popfix"] = {},
+
+  -- fold plugin
+  -- za toggle
+  -- zR open all fold
+  ["RishabhRD/nvim-lsputils"] = {},
 
   -- lsp gd preview
   ["rmagatti/goto-preview"] = {
@@ -515,16 +515,13 @@ return {
     end,
   },
   -- kebab camelCase underbar motion
-  ["bkad/CamelCaseMotion"] = {},
-
-  -- align plugin use ga + textObject
   ["junegunn/vim-easy-align"] = {
     config = function()
       vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
     end,
   },
 
-  -- <leader>tm & qq to toggle term
+  -- align plugin use ga + textObject
   ["NvChad/nvterm"] = {
     config = function()
       require("nvterm").setup {
@@ -556,6 +553,7 @@ return {
     end,
   },
 
+  -- <leader>tm & qq to toggle term
   ["gen740/SmoothCursor.nvim"] = {
     config = function()
       require("smoothcursor").setup {
@@ -606,6 +604,77 @@ return {
         post_hook = nil, -- Function to run after the scrolling animation ends
         performance_mode = false, -- Disable "Performance Mode" on all buffers.
       }
+    end,
+  },
+
+  ["Exafunction/codeium.vim"] = {
+    config = function()
+      vim.keymap.set("i", "kk", function()
+        return vim.fn["codeium#Accept"]()
+      end, { expr = true })
+    end,
+  },
+
+  -- replace plugin :S /xx/xx
+  ["chrisgrieser/nvim-alt-substitute"] = {
+    config = function()
+      require("alt-substitute").setup {}
+    end,
+  },
+
+  -- <leader>re
+  ["AckslD/muren.nvim"] = {
+    config = function()
+      require("muren").setup {
+        {
+          -- general
+          create_commands = true,
+          filetype_in_preview = true,
+          -- default togglable options
+          two_step = false,
+          all_on_line = true,
+          preview = true,
+          -- keymaps
+          keys = {
+            close = "q",
+            toggle_side = "<Tab>",
+            toggle_options_focus = "<C-s>",
+            toggle_option_under_cursor = "<CR>",
+            scroll_preview_up = "<Up>",
+            scroll_preview_down = "<Down>",
+            do_replace = "<CR>",
+          },
+          -- ui sizes
+          patterns_width = 30,
+          patterns_height = 10,
+          options_width = 15,
+          preview_height = 15,
+          -- options order in ui
+          order = {
+            "buffer",
+            "two_step",
+            "all_on_line",
+            "preview",
+          },
+          -- highlights used for options ui
+          hl = {
+            options = {
+              on = "@string",
+              off = "@variable.builtin",
+            },
+          },
+        },
+      }
+    end,
+  },
+
+  -- useful when use CamelCase and kebabCase
+  ["chrisgrieser/nvim-spider"] = {
+    config = function()
+      vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
+      vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
+      vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
+      vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
     end,
   },
 }

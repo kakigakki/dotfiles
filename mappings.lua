@@ -79,6 +79,9 @@ M.general = {
 
     -- neotree focus
     ["<leader>e"] = { "<cmd> Neotree focus <CR>", "neoTree focus" },
+
+    -- replacement ui
+    ["<leader>re"] = { "<cmd> MurenToggle <CR>", "toggle replacement ui" },
   },
 
   i = {

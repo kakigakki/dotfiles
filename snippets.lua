@@ -35,32 +35,63 @@ local function loadCustomSnippet(ls)
       t ")",
     }),
 
-    s("cmodel",{
-      t "const { modelVale }defineModel<{",
+    s("cmodel", {
+      t "const { modelValue } = defineModels<{",
       i(1),
-      t "}>()"
+      t "}>()",
     }),
-    s("cemits",{
-      t "const emits = defineEmits<{",
+    s("cemits", {
+      t "const emits = defineEmits<SE<{",
       i(1),
-      t "}>()"
+      t "}>>()",
     }),
-    s("cprops",{
+    s("cprops", {
       t "defineProps<{",
       i(1),
-      t "}>()"
+      t "}>()",
     }),
-    s("cdefault",{
+    s("copt", {
+      t "defineOptions<{",
+      i(1),
+      t "inheritAttrs: false",
+      i(2),
+      t "}>()",
+    }),
+    s("cdefault", {
       t "const props = withDefaults(defineProps<{",
       i(1),
       t "}>(),{",
       t "})",
     }),
-    -- s("model",{
-    --   t "defineModel{<",
-    --   i(1),
-    --   t "}>()"
-    -- })
+
+    s("mdia", {
+      t "const dialogModule = useDialogModule()",
+    }),
+    s("msna", {
+      t "const snackbarModule = useSnackbarModule()",
+    }),
+    s("male", {
+      t "const alertModule = useAlertModule()",
+    }),
+    s("mme", {
+      t "const meModule = useUserMeModule()",
+    }),
+    s("mmes", {
+      t "const meStore = UserMeStore.inject()",
+    }),
+    s("muser", {
+      t "const userModule = useUserModule()",
+    }),
+    s("mmbox", {
+      t "const mboxModule = useMessageBoxModule()",
+    }),
+    s("mmboxs", {
+      t "const mboxStore = MessageBoxStore.inject()",
+    }),
+
+    s("ass", {
+      t "@use '@assets/stylesheets/settings' as *;",
+    }),
   })
 end
 

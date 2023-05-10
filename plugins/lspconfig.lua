@@ -4,7 +4,7 @@ local capabilities = require("plugins.configs.lspconfig").capabilities
 local lspconfig = require "lspconfig"
 
 -- local servers = { "html", "cssls", "vuels", "tsserver", "clangd" }
-local servers = { "html", "cssls", "tsserver", "clangd", "volar" }
+local servers = { "html", "cssls", "tsserver", "clangd", "volar", "eslit" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -25,7 +25,6 @@ capabilities.textDocument.foldingRange = {
 --     client.resolved_capabilities.document_range_formatting = false
 --   end,
 -- }
-
 lspconfig.eslint.setup {
   --- ...
   on_attach = function(client, bufnr)
