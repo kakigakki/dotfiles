@@ -70,8 +70,7 @@ M.general = {
     ["<leader>dx"] = { "<cmd>DiffviewClose<cr>", "close diffview" },
 
     -- goto preview
-    ["<leader>pv"] = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "definition preview" },
-    ["<ESC>"] = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "close preview" },
+    ["<leader>cv"] = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "definition preview" },
 
     ["<leader>ca"] = { "<cmd>CodeActionMenu<cr>", "show codeActionMenu popup" },
 
@@ -82,6 +81,9 @@ M.general = {
 
     -- replacement ui
     ["<leader>re"] = { "<cmd> MurenToggle <CR>", "toggle replacement ui" },
+
+    -- other.nvim
+    ["<leader>ll"] = { "<cmd> Other <CR>", "Jump to related file" },
   },
 
   i = {
@@ -166,6 +168,33 @@ M.lspconfig = {
       end,
       "lsp hover",
     },
+    ["[d"] = {
+      function()
+        vim.diagnostic.goto_prev()
+      end,
+      "goto prev",
+    },
+
+    ["]d"] = {
+      function()
+        vim.diagnostic.goto_next()
+      end,
+      "goto_next",
+    },
+
+    ["<leader>dl"] = {
+      function()
+        vim.diagnostic.setloclist()
+      end,
+      "diagnostic setloclist",
+    },
+
+    ["<leader>fm"] = {
+      function()
+        vim.lsp.buf.format { async = true }
+      end,
+      "lsp formatting",
+    },
   },
 }
 
@@ -179,6 +208,39 @@ M.gitsigns = {
         require("gitsigns").preview_hunk()
       end,
       "Preview hunk",
+    },
+    ["<leader>rh"] = {
+      function()
+        require("gitsigns").reset_hunk()
+      end,
+      "Reset hunk",
+    },
+    ["]]"] = {
+      function()
+        if vim.wo.diff then
+          return "]c"
+        end
+        vim.schedule(function()
+          require("gitsigns").next_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Jump to next hunk",
+      opts = { expr = true },
+    },
+
+    ["[["] = {
+      function()
+        if vim.wo.diff then
+          return "[c"
+        end
+        vim.schedule(function()
+          require("gitsigns").prev_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Jump to prev hunk",
+      opts = { expr = true },
     },
   },
 }

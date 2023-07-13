@@ -39,7 +39,6 @@ return {
   },
 
   ["kyazdani42/nvim-tree.lua"] = false,
-
   ["nvim-neo-tree/neo-tree.nvim"] = {
     branch = "v2.x",
     requires = {
@@ -514,14 +513,14 @@ return {
       vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
     end,
   },
-  -- kebab camelCase underbar motion
+
+  -- align plugin use ga + textObject
   ["junegunn/vim-easy-align"] = {
     config = function()
       vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
     end,
   },
 
-  -- align plugin use ga + textObject
   ["NvChad/nvterm"] = {
     config = function()
       require("nvterm").setup {
@@ -558,21 +557,15 @@ return {
     config = function()
       require("smoothcursor").setup {
         autostart = true,
-        cursor = "", -- cursor shape (need nerd font)
+        cursor = "", -- cursor shape (need nerd font)
         texthl = "SmoothCursor", -- highlight group, default is { bg = nil, fg = "#FFD400" }
         linehl = nil, -- highlight sub-cursor line like 'cursorline', "CursorLine" recommended
         type = "default", -- define cursor movement calculate function, "default" or "exp" (exponential).
         fancy = {
-          enable = false, -- enable fancy mode
-          head = { cursor = "▷", texthl = "SmoothCursor", linehl = nil },
+          enable = true, -- enable fancy mode
+          head = { cursor = "", texthl = "SmoothCursor", linehl = nil },
           body = {
-            { cursor = "", texthl = "SmoothCursorRed" },
-            { cursor = "", texthl = "SmoothCursorOrange" },
-            { cursor = "●", texthl = "SmoothCursorYellow" },
-            { cursor = "●", texthl = "SmoothCursorGreen" },
-            { cursor = "•", texthl = "SmoothCursorAqua" },
-            { cursor = ".", texthl = "SmoothCursorBlue" },
-            { cursor = ".", texthl = "SmoothCursorPurple" },
+            { cursor = "", texthl = "SmoothCursorWhite" },
           },
           tail = { cursor = nil, texthl = "SmoothCursor" },
         },
@@ -587,23 +580,6 @@ return {
         disabled_filetypes = nil, -- this option will be skipped if enabled_filetypes is set. example: { "TelescopePrompt", "NvimTree" }
       }
       -- code
-    end,
-  },
-
-  ["karb94/neoscroll.nvim"] = {
-    config = function()
-      require("neoscroll").setup {
-        -- All these keys will be mapped to their corresponding default scrolling animation
-        mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
-        hide_cursor = true, -- Hide cursor while scrolling
-        stop_eof = true, -- Stop at <EOF> when scrolling downwards
-        respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-        cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-        easing_function = nil, -- Default easing function
-        pre_hook = nil, -- Function to run before the scrolling animation starts
-        post_hook = nil, -- Function to run after the scrolling animation ends
-        performance_mode = false, -- Disable "Performance Mode" on all buffers.
-      }
     end,
   },
 
@@ -668,13 +644,89 @@ return {
     end,
   },
 
-  -- useful when use CamelCase and kebabCase
-  ["chrisgrieser/nvim-spider"] = {
+  -- Uixx.vue和xx.vue可以互相跳转
+  ["rgroli/other.nvim"] = {
     config = function()
-      vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
-      vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
-      vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
-      vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
+      require("other-nvim").setup {
+        mappings = {
+          -- custom mapping
+          {
+            pattern = "/main/(.*)/containers/(.*).vue$",
+            target = "/main/%1/components/Ui%2.vue",
+            context = "container",
+          },
+          {
+            pattern = "/main/(.*)/containers/(.*)/(.*).vue$",
+            target = "/main/%1/components/%2/Ui%3.vue",
+            context = "container",
+          },
+          {
+            pattern = "/main/(.*)/containers/.*/(.*).vue$",
+            target = "/main/%1/components/Ui%2.vue",
+            context = "container",
+          },
+          {
+            pattern = "/main/(.*)/containers/(.*).vue$",
+            target = "/main/%1/components/%2/Ui%2.vue",
+            context = "container",
+          },
+          {
+            pattern = "/main/(.*)/components/Ui(.*).vue$",
+            target = "/main/%1/containers/%2.vue",
+            context = "component",
+          },
+          {
+            pattern = "/main/(.*)/components/(.*)/Ui(.*).vue$",
+            target = "/main/%1/containers/%2/%3.vue",
+            context = "component",
+          },
+          {
+            pattern = "/main/(.*)/components/.*/Ui(.*).vue$",
+            target = "/main/%1/containers/%2.vue",
+            context = "component",
+          },
+          {
+            pattern = "/main/(.*)/components/Ui(.*).vue$",
+            target = "/main/%1/containers/%2/%2.vue",
+            context = "component",
+          },
+          {
+            pattern = "/main/(.*)/stores/.*/(.*)Store.ts$",
+            target = "/main/%1/modules/use%2Module.ts",
+            context = "stores",
+          },
+          {
+            pattern = "/main/(.*)/modules/use(.*)Module.ts$",
+            target = "/main/%1/stores/%2Store/%2Store.ts",
+            context = "modules",
+          },
+        },
+        style = {
+          -- How the plugin paints its window borders
+          -- Allowed values are none, single, double, rounded, solid and shadow
+          border = "solid",
+
+          -- Column seperator for the window
+          seperator = "|",
+
+          -- width of the window in percent. e.g. 0.5 is 50%, 1.0 is 100%
+          width = 0.7,
+
+          -- min height in rows.
+          -- when more columns are needed this value is extended automatically
+          minHeight = 2,
+        },
+        showMissingFiles = false,
+      }
     end,
   },
+  -- -- useful when use CamelCase and kebabCase
+  -- ["chrisgrieser/nvim-spider"] = {
+  --   config = function()
+  --     vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
+  --     vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
+  --     vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
+  --     vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
+  --   end,
+  -- },
 }
