@@ -22,24 +22,22 @@ local on_attach = require("plugins.configs.lspconfig").on_attach
 --   })
 -- end
 
-local capabilities = require("plugins.configs.lspconfig").capabilities
-capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-
 -- fold option
-capabilities.textDocument.foldingRange = {
-  dynamicRegistration = true,
-  lineFoldingOnly = true,
-}
+-- capabilities.textDocument.foldingRange = {
+--   dynamicRegistration = true,
+--   lineFoldingOnly = true,
+-- }
 
 local lspconfig = require "lspconfig"
 
 -- for vue2
--- local servers = { "html", "cssls", "vuels", "tsserver"}
+-- local servers = { "html", "cssls", "vuels", "tsserver" }
 
 -- for vue3
 local servers = { "cssls", "volar", "eslint_d" }
-
+local capabilities = require("plugins.configs.lspconfig").capabilities
 -- when use take over mode
+capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true -- when use take over mode
 lspconfig.volar.setup {
   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
 }
