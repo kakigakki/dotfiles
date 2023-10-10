@@ -56,6 +56,8 @@ M.general = {
       end,
       "prev marked file",
     },
+    ["<leader>sl"] = { "<cmd>SessionManager load_session<cr>", "load session" },
+    ["<leader>rl"] = { "<cmd>LspStop<cr><cmd>LspStart<cr>", "restart lsp" },
 
     -- VGit preview
     -- ["<leader>fg"] = { "<cmd>VGit buffer_history_preview<cr>", "file history preview" },
@@ -65,12 +67,12 @@ M.general = {
 
     -- diffview
     ["<leader>da"] = { "<cmd>DiffviewFileHistory<cr>", "open branch commits history" },
-    ["<leader>df"] = { "<cmd>DiffviewFileHistory %<cr>", "open current file history" },
+    ["<leader>df"] = { "gg<S-v>G:DiffviewFileHistory<cr>", "open current file history" },
     ["<leader>do"] = { "<cmd>DiffviewOpen<cr>", "open diffview" },
     ["<leader>dx"] = { "<cmd>DiffviewClose<cr>", "close diffview" },
 
     -- goto preview
-    ["<leader>cv"] = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "definition preview" },
+    ["<leader>pd"] = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "definition preview" },
 
     ["<leader>ca"] = { "<cmd>CodeActionMenu<cr>", "show codeActionMenu popup" },
 
@@ -139,6 +141,7 @@ M.nvterm = {
 
   t = {
     -- toggle in terminal mode
+    ["rr"] = { "<C-\\><C-n>", "toNormalMode" },
     ["qq"] = {
       function()
         require("nvterm.terminal").toggle "float"

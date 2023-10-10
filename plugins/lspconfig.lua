@@ -34,13 +34,12 @@ local lspconfig = require "lspconfig"
 -- local servers = { "html", "cssls", "vuels", "tsserver" }
 
 -- for vue3
-local servers = { "cssls", "volar", "eslint_d" }
-local capabilities = require("plugins.configs.lspconfig").capabilities
--- when use take over mode
-capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true -- when use take over mode
-lspconfig.volar.setup {
-  filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
-}
+local servers = { "cssls", "volar", "tsserver" }
+-- local capabilities = require("plugins.configs.lspconfig").capabilities -- when use take over mode
+-- capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true -- when use take over mode
+-- lspconfig.volar.setup {
+--   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+-- } -- when use take over mode
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {

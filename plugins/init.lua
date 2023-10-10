@@ -631,10 +631,10 @@ return {
             do_replace = "<CR>",
           },
           -- ui sizes
-          patterns_width = 30,
-          patterns_height = 10,
+          patterns_width = 50,
+          patterns_height = 50,
           options_width = 15,
-          preview_height = 15,
+          preview_height = 50,
           -- options order in ui
           order = {
             "buffer",
@@ -671,6 +671,11 @@ return {
             context = "container",
           },
           {
+            pattern = "/main/(.*)/containers/(.*)/(.*).vue$",
+            target = "/main/%1/components/Ui%2/Ui%3.vue",
+            context = "container",
+          },
+          {
             pattern = "/main/(.*)/containers/.*/(.*).vue$",
             target = "/main/%1/components/Ui%2.vue",
             context = "container",
@@ -678,6 +683,11 @@ return {
           {
             pattern = "/main/(.*)/containers/(.*).vue$",
             target = "/main/%1/components/%2/Ui%2.vue",
+            context = "container",
+          },
+          {
+            pattern = "/main/(.*)/containers/(.*).vue$",
+            target = "/main/%1/components/Ui%2/Ui%2.vue",
             context = "container",
           },
           {
@@ -693,6 +703,16 @@ return {
           {
             pattern = "/main/(.*)/components/.*/Ui(.*).vue$",
             target = "/main/%1/containers/%2.vue",
+            context = "component",
+          },
+          {
+            pattern = "/main/(.*)/components/Ui(.*)/Ui(.*).vue$",
+            target = "/main/%1/containers/%2.vue",
+            context = "component",
+          },
+          {
+            pattern = "/main/(.*)/components/Ui.*/Ui(.*).vue$",
+            target = "/main/%1/containers/%2/%2.vue",
             context = "component",
           },
           {
@@ -799,4 +819,15 @@ return {
   --     }
   --   end,
   -- },
+  ["numToStr/FTerm.nvim"] = {
+    config = function()
+      require("FTerm").setup {
+        border = "double",
+        dimensions = {
+          height = 0.9,
+          width = 0.9,
+        },
+      }
+    end,
+  },
 }

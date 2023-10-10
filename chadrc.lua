@@ -1,8 +1,8 @@
 local M = {}
 
 M.ui = {
-  theme_toggle = { "dark_horizon", "everforest_light" },
-  theme = "kanagawa",
+  theme_toggle = { "chadracula", "everforest_light" },
+  theme = "chadracula", --kanagawa
 }
 
 M.plugins = require "custom.plugins"
