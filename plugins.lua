@@ -1,25 +1,41 @@
-local overrides = require "custom.plugins.overrides"
 vim.g.code_action_menu_show_details = false
 vim.g.code_action_menu_window_border = "single"
 vim.g.camelcasemotion_key = ","
 
 return {
-
-  -- ["goolord/alpha-nvim"] = { disable = false } -- enables dashboard
-
-  -- Override plugin definition options
-  ["neovim/nvim-lspconfig"] = {
+  -- In order to modify the `lspconfig` configuration:
+  {
+    "neovim/nvim-lspconfig",
     config = function()
       require "plugins.configs.lspconfig"
-      require "custom.plugins.lspconfig"
+      require "custom.configs.lspconfig"
     end,
   },
 
-  ["folke/which-key.nvim"] = { disable = false },
+  {
+    "neovim/nvim-lspconfig",
+
+    dependencies = {
+      "jose-elias-alvarez/null-ls.nvim",
+      config = function()
+        require "custom.configs.null-ls"
+      end,
+    },
+
+    config = function()
+      require "plugins.configs.lspconfig"
+      require "custom.configs.lspconfig"
+    end,
+  },
+
+  -- ["goolord/alpha-nvim"] = { disable = false } -- enables dashboard
+
+  { "folke/which-key.nvim", disable = false },
 
   -- overrde plugin configs
-  ["lewis6991/gitsigns.nvim"] = {
-    override_options = {
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
       current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame
       numhl = true, -- Toggle with `:Gitsigns toggle_numhl`
       current_line_blame_opts = {
@@ -29,19 +45,49 @@ return {
     },
   },
 
-  ["nvim-treesitter/nvim-treesitter"] = {
+  {
+    "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate", -- for nvim-ufo
-    override_options = overrides.treesitter,
+    opts = {
+      ensure_installed = {
+        "vim",
+        "lua",
+        "html",
+        "css",
+        "typescript",
+      },
+    },
   },
 
-  ["williamboman/mason.nvim"] = {
-    override_options = overrides.mason,
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        -- lua stuff
+        "lua-language-server",
+        "stylua",
+
+        -- web dev stuff
+        "css-lsp",
+        "html-lsp",
+        "typescript-language-server",
+        "vetur-vls",
+        "eslint_d",
+        "vue-language-server",
+      },
+    },
   },
 
-  ["kyazdani42/nvim-tree.lua"] = false,
-  ["nvim-neo-tree/neo-tree.nvim"] = {
+  {
+    "nvim-tree/nvim-tree.lua",
+    disable = false,
+  },
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    lazy = false,
     branch = "v2.x",
-    requires = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
@@ -265,37 +311,38 @@ return {
   },
 
   -- Install a plugin
-  ["lukas-reineke/lsp-format.nvim"] = {},
+  "lukas-reineke/lsp-format.nvim",
 
   -- code formatting, linting etc
-  ["max397574/better-escape.nvim"] = {
+  {
+    "max397574/better-escape.nvim",
+    lazt = false,
     event = "InsertEnter",
     config = function()
       require("better_escape").setup()
     end,
   },
 
-  ["jose-elias-alvarez/null-ls.nvim"] = {
-    after = "nvim-lspconfig",
-    config = function()
-      require "custom.plugins.null-ls"
-    end,
+  {
+    "tpope/vim-fugitive",
+    lazy = false,
   },
 
-  ["tpope/vim-fugitive"] = {},
-
-  ["goolord/alpha-nvim"] = {
-    override_options = overrides.alpha,
-    disable = false,
+  {
+    "kdheepak/lazygit.nvim",
+    lazy = false,
   },
-
-  ["kdheepak/lazygit.nvim"] = {},
 
   -- カーソルが当たった単語を光らせる
-  ["RRethy/vim-illuminate"] = {},
+  {
+    "RRethy/vim-illuminate",
+    lazy = false,
+  },
 
   -- モードが行数の色でわかるようになる
-  ["mvllow/modes.nvim"] = {
+  {
+    "mvllow/modes.nvim",
+    lazy = false,
     tag = "v0.2.0",
     config = function()
       require("modes").setup()
@@ -321,17 +368,24 @@ return {
   },
 
   -- word search tool
-  ["ggandor/lightspeed.nvim"] = {},
+  {
+    "ggandor/lightspeed.nvim",
+    lazy = false,
+  },
 
   -- <leader>s
-  ["gbprod/substitute.nvim"] = {
+  {
+    "gbprod/substitute.nvim",
+    lazy = false,
     config = function()
       require("substitute").setup {}
     end,
   },
 
-  ["kevinhwang91/nvim-ufo"] = {
-    requires = "kevinhwang91/promise-async",
+  {
+    "kevinhwang91/nvim-ufo",
+    lazy = false,
+    dependencies = { "kevinhwang91/promise-async" },
     config = function()
       require("ufo").setup {
         provider_selector = function(bufnr, filetype)
@@ -342,15 +396,23 @@ return {
       vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
     end,
   },
-  ["RishabhRD/popfix"] = {},
+
+  {
+    "RishabhRD/popfix",
+    lazy = false,
+  },
 
   -- fold plugin
   -- za toggle
   -- zR open all fold
-  ["RishabhRD/nvim-lsputils"] = {},
+  {
+    "RishabhRD/nvim-lsputils",
+    lazy = false,
+  },
 
   -- lsp gd preview
-  ["rmagatti/goto-preview"] = {
+  {
+    "rmagatti/goto-preview",
     config = function()
       require("goto-preview").setup {
         resizing_mappings = true,
@@ -363,8 +425,11 @@ return {
 
   -- like v-surround
   -- S-s + object
-  ["kylechui/nvim-surround"] = {
-    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+  {
+    "kylechui/nvim-surround",
+    lazy = false,
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
     config = function()
       require("nvim-surround").setup {
         -- Configuration here, or leave empty to use defaults
@@ -375,7 +440,8 @@ return {
   -- mark
   -- <leader>ma   add mark
   -- <leader>mm   open mark list
-  ["ThePrimeagen/harpoon"] = {
+  {
+    "ThePrimeagen/harpoon",
     config = function()
       require("harpoon").setup {
         menu = {
@@ -387,7 +453,8 @@ return {
 
   -- m;  toggle mark
   -- mm  jump to next mark
-  ["chentoast/marks.nvim"] = {
+  {
+    "chentoast/marks.nvim",
     config = function()
       require("marks").setup {
         default_mappings = true,
@@ -401,7 +468,9 @@ return {
   },
 
   -- session
-  ["Shatur/neovim-session-manager"] = {
+  {
+    "Shatur/neovim-session-manager",
+    lazy = false,
     config = function()
       require("session_manager").setup {
         sessions_dir = require("plenary.path"):new(vim.fn.stdpath "data", "sessions"), -- The directory where the session files will be saved.
@@ -422,8 +491,10 @@ return {
   },
 
   -- git tool, for copy file permalinks
-  ["ruifm/gitlinker.nvim"] = {
-    requires = {
+  {
+    "ruifm/gitlinker.nvim",
+    lazy = false,
+    dependencies = {
       "nvim-lua/plenary.nvim",
     },
     config = function()
@@ -432,8 +503,10 @@ return {
   },
 
   -- git tool , mainly for file history
-  ["sindrets/diffview.nvim"] = {
-    requires = {
+  {
+    "sindrets/diffview.nvim",
+    lazy = false,
+    dependencies = {
       "nvim-lua/plenary.nvim",
     },
     config = function()
@@ -449,17 +522,24 @@ return {
     end,
   },
 
-  ["windwp/nvim-ts-autotag"] = {
+  {
+    "windwp/nvim-ts-autotag",
+    lazy = false,
     config = function()
       require("nvim-ts-autotag").setup()
     end,
   },
 
   -- ctrl + n
-  ["terryma/vim-multiple-cursors"] = {},
+  {
+    "terryma/vim-multiple-cursors",
+    lazy = false,
+  },
 
   -- highlight N search
-  ["kevinhwang91/nvim-hlslens"] = {
+  {
+    "kevinhwang91/nvim-hlslens",
+    lazy = false,
     config = function()
       require("hlslens").setup {
         calm_down = true,
@@ -500,11 +580,16 @@ return {
   },
 
   -- popup code action
-  ["weilbith/nvim-code-action-menu"] = {
+  {
+    "weilbith/nvim-code-action-menu",
+    lazy = false,
     cmd = "CodeActionMenu",
   },
   -- use key "-" edit directory or file like edit text
-  ["elihunter173/dirbuf.nvim"] = {},
+  {
+    "elihunter173/dirbuf.nvim",
+    lazy = false,
+  },
 
   -- when open history
   -- ["<c-p>"] = mapping.put("p"),
@@ -526,13 +611,15 @@ return {
   -- },
 
   -- align plugin use ga + textObject
-  ["junegunn/vim-easy-align"] = {
+  {
+    "junegunn/vim-easy-align",
     config = function()
       vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
     end,
   },
 
-  ["NvChad/nvterm"] = {
+  {
+    "NvChad/nvterm",
     config = function()
       require("nvterm").setup {
         terminals = {
@@ -593,7 +680,9 @@ return {
   --   end,
   -- },
 
-  ["Exafunction/codeium.vim"] = {
+  {
+    "Exafunction/codeium.vim",
+    lazy = false,
     config = function()
       vim.keymap.set("i", "kk", function()
         return vim.fn["codeium#Accept"]()
@@ -609,7 +698,9 @@ return {
   -- },
 
   -- <leader>re
-  ["AckslD/muren.nvim"] = {
+  {
+    "AckslD/muren.nvim",
+    lazy = false,
     config = function()
       require("muren").setup {
         {
@@ -655,7 +746,9 @@ return {
   },
 
   -- Uixx.vue和xx.vue可以互相跳转
-  ["rgroli/other.nvim"] = {
+  {
+    "rgroli/other.nvim",
+    lazy = false,
     config = function()
       require("other-nvim").setup {
         mappings = {
@@ -771,63 +864,4 @@ return {
   -- },
   --
   -- auto close buffers
-  ["axkirillov/hbac.nvim"] = {
-    requires = {
-      -- these are optional, add them, if you want the telescope module
-      "nvim-telescope/telescope.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-    require("hbac").setup {
-      autoclose = true, -- set autoclose to false if you want to close manually
-      threshold = 10, -- hbac will start closing unedited buffers once that number is reached
-      close_command = function(bufnr)
-        vim.api.nvim_buf_delete(bufnr, {})
-      end,
-      close_buffers_with_windows = false, -- hbac will close buffers with associated windows if this option is `true`
-      telescope = {
-        mappings = {
-          n = {
-            close_unpinned = "<M-c>",
-            delete_buffer = "<M-x>",
-            pin_all = "<M-a>",
-            unpin_all = "<M-u>",
-            toggle_selections = "<M-y>",
-          },
-          i = {
-            -- as above
-          },
-        },
-        -- Pinned/unpinned icons and their hl groups. Defaults to nerdfont icons
-        pin_icons = {
-          pinned = { "󰐃 ", hl = "DiagnosticOk" },
-          unpinned = { "󰤱 ", hl = "DiagnosticError" },
-        },
-      },
-    },
-  },
-
-  -- show actions hints
-  -- ["roobert/action-hints.nvim"] = {
-  --   config = function()
-  --     require("action-hints").setup {
-  --       template = {
-  --         definition = { text = "", color = "#add8e6" },
-  --         references = { text = " ↱%s", color = "#add8e6" },
-  --       },
-  --       use_virtual_text = false,
-  --     }
-  --   end,
-  -- },
-  ["numToStr/FTerm.nvim"] = {
-    config = function()
-      require("FTerm").setup {
-        border = "double",
-        dimensions = {
-          height = 0.9,
-          width = 0.9,
-        },
-      }
-    end,
-  },
 }
