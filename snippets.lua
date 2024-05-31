@@ -41,9 +41,9 @@ local function loadCustomSnippet(ls)
       t "}>()",
     }),
     s("cemits", {
-      t "const emits = defineEmits<SE<{",
+      t "const emits = defineEmits<{",
       i(1),
-      t "}>>()",
+      t "}>()",
     }),
     s("cprops", {
       t "defineProps<{",

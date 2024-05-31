@@ -1,8 +1,8 @@
 local M = {}
 
 M.ui = {
-  theme_toggle = { "chadracula", "everforest_light" },
-  theme = "chadracula", --kanagawa
+  theme_toggle = { "aquarium", "everforest_light" },
+  theme = "aquarium", --kanagawa
   nvdash = {
     load_on_startup = true,
 

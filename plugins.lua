@@ -52,9 +52,8 @@ return {
       ensure_installed = {
         "vim",
         "lua",
-        "html",
-        "css",
         "typescript",
+        "vue",
       },
     },
   },
@@ -68,10 +67,8 @@ return {
         "stylua",
 
         -- web dev stuff
-        "css-lsp",
-        "html-lsp",
         "typescript-language-server",
-        "vetur-vls",
+        -- "vetur-vls",
         "eslint_d",
         "vue-language-server",
       },
@@ -316,7 +313,6 @@ return {
   -- code formatting, linting etc
   {
     "max397574/better-escape.nvim",
-    lazt = false,
     event = "InsertEnter",
     config = function()
       require("better_escape").setup()
@@ -455,6 +451,7 @@ return {
   -- mm  jump to next mark
   {
     "chentoast/marks.nvim",
+    lazy = false,
     config = function()
       require("marks").setup {
         default_mappings = true,
@@ -613,6 +610,7 @@ return {
   -- align plugin use ga + textObject
   {
     "junegunn/vim-easy-align",
+    lazy = false,
     config = function()
       vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
     end,
@@ -649,36 +647,6 @@ return {
       }
     end,
   },
-
-  -- ["gen740/SmoothCursor.nvim"] = {
-  --   config = function()
-  --     require("smoothcursor").setup {
-  --       autostart = true,
-  --       cursor = "", -- cursor shape (need nerd font)
-  --       texthl = "SmoothCursor", -- highlight group, default is { bg = nil, fg = "#FFD400" }
-  --       linehl = nil, -- highlight sub-cursor line like 'cursorline', "CursorLine" recommended
-  --       type = "default", -- define cursor movement calculate function, "default" or "exp" (exponential).
-  --       fancy = {
-  --         enable = true, -- enable fancy mode
-  --         head = { cursor = "", texthl = "SmoothCursor", linehl = nil },
-  --         body = {
-  --           { cursor = "", texthl = "SmoothCursorWhite" },
-  --         },
-  --         tail = { cursor = nil, texthl = "SmoothCursor" },
-  --       },
-  --       flyin_effect = nil, -- "bottom" or "top"
-  --       speed = 80, -- max is 100 to stick to your current position
-  --       intervals = 35, -- tick interval
-  --       priority = 10, -- set marker priority
-  --       timeout = nil, -- timout for animation
-  --       threshold = 3, -- animate if threshold lines jump
-  --       disable_float_win = false, -- disable on float window
-  --       enabled_filetypes = nil, -- example: { "lua", "vim" }
-  --       disabled_filetypes = nil, -- this option will be skipped if enabled_filetypes is set. example: { "TelescopePrompt", "NvimTree" }
-  --     }
-  --     -- code
-  --   end,
-  -- },
 
   {
     "Exafunction/codeium.vim",
@@ -853,15 +821,4 @@ return {
       }
     end,
   },
-  -- -- useful when use CamelCase and kebabCase
-  -- ["chrisgrieser/nvim-spider"] = {
-  --   config = function()
-  --     vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
-  --     vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
-  --     vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
-  --     vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
-  --   end,
-  -- },
-  --
-  -- auto close buffers
 }

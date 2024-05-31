@@ -141,7 +141,7 @@ M.nvterm = {
 
   t = {
     -- toggle in terminal mode
-    ["rr"] = { "<C-\\><C-n>", "toNormalMode" },
+    ["1<ESC>"] = { "<C-\\><C-n>", "toNormalMode" },
     ["qq"] = {
       function()
         require("nvterm.terminal").toggle "float"
