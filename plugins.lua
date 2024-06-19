@@ -821,4 +821,9 @@ return {
       }
     end,
   },
+
+  {
+    "tpope/vim-rails",
+    lazy = false,
+  },
 }
